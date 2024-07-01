@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+option go_package = "/payment";
+
+package payment;
+
+
+// Payment Service definition
+service PaymentService {
+    rpc CreatePayment(CreatePaymentRequest) returns (CreatePaymentResponse);
+    rpc GetPayment(GetPaymentRequest) returns (GetPaymentResponse);
+    rpc UpdatePayment(UpdatePaymentRequest) returns (UpdatePaymentResponse);
+    rpc DeletePayment(DeletePaymentRequest) returns (DeletePaymentResponse);
+    rpc PayForReservation(PayForReservationReq) returns (PayForReservationRes);
+}
+
+// Payment message definition
+message Payment {
+    string id = 1;                 
+    string reservation_id = 2;     
+    double amount = 3;
+    double paid = 4;
+    string payment_method = 5;
+    string payment_status = 6;
+    string created_at = 7;         
+    string updated_at = 8;         
+    int64 deleted_at = 9;
+}
+
+message PayForReservationReq{
+    string id = 1;
+    double paid = 2;
+    string payment_method = 3;
+}
+
+message PayForReservationRes{
+    string message = 1;
+}
+// Requests and Responses for Payment CRUD
+message CreatePaymentRequest {
+    Payment payment = 1;
+}
+
+
+message CreatePaymentResponse {
+    Payment payment = 1;
+}
+
+message GetPaymentRequest {
+    string id = 1;                 
+}
+
+message GetPaymentResponse {
+    Payment payment = 1;
+}
+
+message UpdatePaymentRequest {
+    Payment payment = 1;
+}
+
+message UpdatePaymentResponse {
+    Payment payment = 1;
+}
+
+message DeletePaymentRequest {
+    string id = 1;                 
+}
+
+message DeletePaymentResponse {
+    string message = 1;
+}
+
+
+

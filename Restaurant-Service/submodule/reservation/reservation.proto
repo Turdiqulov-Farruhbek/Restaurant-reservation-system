@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+option go_package = "/reservation";
+
+package reservation;
+
+service ReservationService {
+    rpc CreateReservation(CreateReservationRequest) returns (CreateReservationResponse);
+    rpc GetReservation(GetReservationRequest) returns (GetReservationResponse);
+    rpc UpdateReservation(UpdateReservationRequest) returns (UpdateReservationResponse);
+    rpc DeleteReservation(DeleteReservationRequest) returns (DeleteReservationResponse);
+    rpc ListReservations(ListReservationsRequest) returns (ListReservationsResponse);
+    rpc CheckAvailability(CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
+    rpc FoodList(OrderFoodListReq) returns (OrderFoodListRes);
+    rpc OrderFood(OrderFoodReq) returns (OrderFoodRes);
+    rpc IsValidReservation(IsValidReq) returns (IsValidRes);
+    rpc OrderBill(OrderBillReq) returns (OrderBillRes);
+}
+
+// Reservation message definition
+message Reservation {
+    string id = 1;           
+    string user_id = 2;      
+    string restaurant_id = 3;
+    string reservation_time = 4;  // Consider using a well-defined format like RFC 3339
+    string status = 5;             // Consider using an enum for better type safety
+    string created_at = 6;        // Consider using a well-defined format like RFC 3339
+    string updated_at = 7;        // Consider using a well-defined format like RFC 3339
+}
+
+message OrderBillReq{
+    string reservation_id = 1;
+}
+
+message OrderBillRes{
+    string payment_id = 1;
+}
+message IsValidReq{
+    string id = 1;
+}
+
+message IsValidRes{
+    bool valid = 1;
+}
+
+message OrderFoodReq {
+    string id = 1;
+    string reservation_id = 2;
+    string menu_id = 3;
+    int32 count = 4;
+}
+message OrderFoodRes{
+    string message = 1;
+}
+
+// Requst for food order for reservation
+message OrderFoodListReq {
+    string reservation_id = 1;
+}
+message OrderFoodListRes{
+    repeated Menus menus= 1;
+}
+message Menus {
+    string id = 1;                   
+    string restaurant_id = 2;        
+    string name = 3;
+    string description = 4;
+    double price = 5;
+}
+
+// Requests and Responses for Reservation CRUD
+message CreateReservationRequest {
+    Reservation reservation = 1;
+}
+
+message CreateReservationResponse {
+    Reservation reservation = 1;
+}
+
+message GetReservationRequest {
+    string id = 1; // UUID
+}
+
+message GetReservationResponse {
+    Reservation reservation = 1;
+    // Error error = 2;
+}
+
+message UpdateReservationRequest {
+    Reservation reservation = 1;
+}
+
+message UpdateReservationResponse {
+    Reservation reservation = 1;
+    // Error error = 2;
+}
+
+message DeleteReservationRequest {
+    string id = 1; // UUID
+}
+
+message DeleteReservationResponse {
+    string message = 1;
+
+}
+
+message ListReservationsRequest {
+    string user_id = 1;              // Filter by user ID
+    string restaurant_id = 2;       // Filter by restaurant ID
+    string status = 3;                // Filter by reservation status
+    string start_time = 4;           // Filter by reservation start time 
+    string end_time = 5;             // Filter by reservation end time
+
+    // Pagination
+    int32 page = 6;                  
+    int32 limit = 7;                 
+}
+
+message ListReservationsResponse {
+    repeated Reservation reservations = 1;
+}
+
+message CheckAvailabilityRequest {
+    string restaurant_id = 1; 
+    string reservation_time = 2;
+}
+
+message CheckAvailabilityResponse {
+    bool available = 1;
+}

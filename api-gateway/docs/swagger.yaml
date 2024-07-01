@@ -1,0 +1,727 @@
+definitions:
+  payment.Payment:
+    properties:
+      amount:
+        type: number
+      created_at:
+        type: string
+      deleted_at:
+        type: integer
+      id:
+        type: string
+      payment_method:
+        type: string
+      payment_status:
+        type: string
+      reservation_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  payment.UpdatePaymentRequest:
+    properties:
+      payment:
+        $ref: '#/definitions/payment.Payment'
+    type: object
+  reservation.CreateMenuRequest:
+    properties:
+      menu:
+        $ref: '#/definitions/reservation.Menu'
+    type: object
+  reservation.CreateReservationRequest:
+    properties:
+      reservation:
+        $ref: '#/definitions/reservation.Reservation'
+    type: object
+  reservation.CreateRestaurantRequest:
+    properties:
+      restaurant:
+        $ref: '#/definitions/reservation.Restaurant'
+    type: object
+  reservation.GetMenuResponse:
+    properties:
+      menu:
+        $ref: '#/definitions/reservation.Menu'
+    type: object
+  reservation.Menu:
+    properties:
+      created_at:
+        description: Timestamp with time zone
+        type: string
+      deleted_at:
+        type: integer
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      restaurant_id:
+        type: string
+      updated_at:
+        description: Timestamp with time zone
+        type: string
+    type: object
+  reservation.OrderFoodReq:
+    properties:
+      count:
+        type: integer
+      id:
+        type: string
+      menu_id:
+        type: string
+      reservation_id:
+        type: string
+    type: object
+  reservation.PaymentReservationRequest:
+    properties:
+      amount:
+        type: number
+      created_at:
+        type: string
+      deleted_at:
+        type: integer
+      id:
+        type: string
+      payment_method:
+        type: string
+      payment_status:
+        type: string
+      reservation_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  reservation.Reservation:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      reservation_time:
+        type: string
+      restaurant_id:
+        type: string
+      status:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  reservation.Restaurant:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  reservation.UpdateMenuRequest:
+    properties:
+      menu:
+        $ref: '#/definitions/reservation.Menu'
+    type: object
+  reservation.UpdateReservationRequest:
+    properties:
+      reservation:
+        $ref: '#/definitions/reservation.Reservation'
+    type: object
+  reservation.UpdateRestaurantRequest:
+    properties:
+      restaurant:
+        $ref: '#/definitions/reservation.Restaurant'
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/menu:
+    get:
+      consumes:
+      - application/json
+      description: Get all menus
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all menus
+      tags:
+      - menu
+    post:
+      consumes:
+      - application/json
+      description: Create new menu
+      parameters:
+      - description: Menu
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.CreateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create new menu
+      tags:
+      - menu
+  /api/v1/menu/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete menu
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete menu
+      tags:
+      - menu
+    get:
+      consumes:
+      - application/json
+      description: Get menu by ID
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/reservation.GetMenuResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get menu by ID
+      tags:
+      - menu
+    put:
+      consumes:
+      - application/json
+      description: Update menu
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Menu
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.UpdateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update menu
+      tags:
+      - menu
+  /api/v1/payments:
+    post:
+      consumes:
+      - application/json
+      description: Create new payment
+      parameters:
+      - description: Payment
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/payment.Payment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create new payment
+      tags:
+      - payment
+  /api/v1/payments/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get payment by ID
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get payment by ID
+      tags:
+      - payment
+    put:
+      consumes:
+      - application/json
+      description: Update payment
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Payment
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/payment.UpdatePaymentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update payment
+      tags:
+      - payment
+  /api/v1/reservations:
+    get:
+      consumes:
+      - application/json
+      description: Get all reservations
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all reservations
+      tags:
+      - reservation
+    post:
+      consumes:
+      - application/json
+      description: Create new reservation
+      parameters:
+      - description: Reservation
+        in: body
+        name: reservation
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.CreateReservationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create new reservation
+      tags:
+      - reservation
+  /api/v1/reservations/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete reservation
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete reservation
+      tags:
+      - reservation
+    get:
+      consumes:
+      - application/json
+      description: Get reservation by ID
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get reservation by ID
+      tags:
+      - reservation
+    put:
+      consumes:
+      - application/json
+      description: Update reservation
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Reservation
+        in: body
+        name: reservation
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.UpdateReservationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update reservation
+      tags:
+      - reservation
+  /api/v1/reservations/{id}/order:
+    post:
+      consumes:
+      - application/json
+      description: Order reservation by ID
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.OrderFoodReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Order reservation by ID
+      tags:
+      - reservation
+  /api/v1/reservations/{id}/payment:
+    post:
+      consumes:
+      - application/json
+      description: Process payment for reservation
+      parameters:
+      - description: Reservation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Payment
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.PaymentReservationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Process payment for reservation
+      tags:
+      - reservation
+  /api/v1/reservations/check:
+    post:
+      consumes:
+      - application/json
+      description: Check reservation
+      parameters:
+      - description: Check
+        in: body
+        name: check
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Check reservation
+      tags:
+      - reservation
+  /api/v1/restaurants:
+    get:
+      consumes:
+      - application/json
+      description: Get all restaurants
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all restaurants
+      tags:
+      - restaurant
+    post:
+      consumes:
+      - application/json
+      description: Create new restaurant
+      parameters:
+      - description: Restaurant
+        in: body
+        name: restaurant
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.CreateRestaurantRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create new restaurant
+      tags:
+      - restaurant
+  /api/v1/restaurants/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete restaurant
+      parameters:
+      - description: Restaurant ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete restaurant
+      tags:
+      - restaurant
+    get:
+      consumes:
+      - application/json
+      description: Get restaurant by ID
+      parameters:
+      - description: Restaurant ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get restaurant by ID
+      tags:
+      - restaurant
+    put:
+      consumes:
+      - application/json
+      description: Update restaurant
+      parameters:
+      - description: Restaurant ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Restaurant
+        in: body
+        name: restaurant
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.UpdateRestaurantRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update restaurant
+      tags:
+      - restaurant
+swagger: "2.0"

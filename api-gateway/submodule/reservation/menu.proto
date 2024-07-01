@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option go_package = "/genproto/reservation";
+
+
+package reservation;
+
+// Menu Service definition
+service MenuService {
+    rpc CreateMenu (CreateMenuRequest) returns (CreateMenuResponse);
+    rpc GetMenu (GetMenuRequest) returns (GetMenuResponse);
+    rpc UpdateMenu (UpdateMenuRequest) returns (UpdateMenuResponse);
+    rpc DeleteMenu (DeleteMenuRequest) returns (DeleteMenuResponse);
+    rpc GetAllMenus (GetAllMenusRequest) returns (GetAllMenusResponse); // New method
+}
+
+// Menu message definition
+message Menu {
+    string id = 1;                   
+    string restaurant_id = 2;        
+    string name = 3;
+    string description = 4;
+    double price = 5;
+    string created_at = 6;   // Timestamp with time zone
+    string updated_at = 7;   // Timestamp with time zone
+    int64 deleted_at = 8;
+}
+
+// Requests and Responses for Menu CRUD
+message CreateMenuRequest {
+    Menu menu = 1; 
+}
+
+message CreateMenuResponse {
+    Menu menu = 1; 
+}
+
+message GetMenuRequest {
+    string id = 1;                   
+}
+
+message GetMenuResponse {
+    Menu menu = 1; 
+}
+
+message UpdateMenuRequest {
+    Menu menu = 1; 
+}
+
+message UpdateMenuResponse {
+    Menu menu = 1; 
+}
+
+message DeleteMenuRequest {
+    string id = 1;                   
+}
+
+message DeleteMenuResponse {
+    string message = 1;
+}
+
+// Request and Response for GetAllMenus
+message GetAllMenusRequest {
+    string restaurant_id = 1;
+    string name = 2;
+    string description = 3;
+    double minPrice = 4;
+    double maxPrice = 5;
+}
+
+message GetAllMenusResponse {
+    repeated Menu menus = 1;
+}

@@ -1,0 +1,49 @@
+# Binaries for all platforms (compiled Go code)
+*.exe
+*.out
+*.o
+*.a
+
+# Test cache
+*.test
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.iml
+
+# GoLand
+.idea/
+*.iml
+out/
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+.#*
+
+# Go build output
+/bin/
+/pkg/
+
+# Dependency management tools
+/vendor/
+go.sum
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Miscellaneous
+*.log
+*.backup
+core

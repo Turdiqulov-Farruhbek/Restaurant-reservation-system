@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option go_package = "/genproto/user";
+
+package user;
+
+// UserService defines the user related RPC services
+service UserService {
+    rpc GetUsers (GetUsersRequest) returns (GetUsersResponse);
+    rpc GetUserById (GetUserByIdRequest) returns (GetUserByIdResponse);
+    rpc SignUp (SignUpRequest) returns (SignUpResponse);
+    rpc SignIn (SignInRequest) returns (SignInResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+
+
+// User message represents the user entity
+message User {
+    string id = 1;
+    string username = 2;
+    string password = 3;
+    string email = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    string deleted_at = 7;
+  }
+  
+  // Request and Response messages for getting users
+  message GetUsersRequest {}
+  
+  message GetUsersResponse {
+      repeated User users = 1;
+  }
+  
+  // Request and Response messages for getting a user by ID
+  message GetUserByIdRequest {
+      string id = 1;           // UUID
+  }
+  
+  message GetUserByIdResponse {
+      User user = 1;
+  }
+  
+  // Request and Response messages for user registration (SignUp)
+  message SignUpRequest {
+      string username = 1;
+      string password = 2;
+      string email = 3;
+  }
+  
+  message SignUpResponse {
+      User user = 1;
+  }
+  
+  // Request and Response messages for user login (SignIn)
+  message SignInRequest {
+      string email = 1;
+      string password = 2;
+  }
+  
+  message SignInResponse {
+      string token = 1;       
+  }
+  
+  // Request and Response messages for updating a user
+  message UpdateUserRequest {
+      string id = 1;           // UUID
+      string username = 2;
+      string password = 3;
+      string email = 4;
+  }
+  
+  message UpdateUserResponse {
+      User user = 1;
+  }
+  
+  // Request and Response messages for deleting a user
+  message DeleteUserRequest {
+      string id = 1;           // UUID
+  }
+  
+  message DeleteUserResponse {
+      string message = 1;
+  }
+  
+  
