@@ -20,8 +20,8 @@ import (
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
-func NewGin(payme *grpc.ClientConn) *gin.Engine {
-	handler := handlers.NewHandler(payme)
+func NewGin(payme, reser *grpc.ClientConn) *gin.Engine {
+	handler := handlers.NewHandler(payme, reser)
 
 	router := gin.Default()
 	router.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

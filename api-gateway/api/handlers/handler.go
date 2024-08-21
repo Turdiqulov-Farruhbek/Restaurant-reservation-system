@@ -16,10 +16,10 @@ type HandlerStruct struct {
 	Menu        reservation.MenuServiceClient
 }
 
-func NewHandler(conPay *grpc.ClientConn) *HandlerStruct {
+func NewHandler(conPay, conRes *grpc.ClientConn) *HandlerStruct {
 	return &HandlerStruct{
 		// User:        user.NewUserServiceClient(conMenu),
 		Payment:     payment.NewPaymentServiceClient(conPay),
-		// Reservation: reservation.NewReservationServiceClient(conReser),
+		Reservation: reservation.NewReservationServiceClient(conRes),
 	}
 }

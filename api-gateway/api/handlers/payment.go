@@ -3,7 +3,6 @@ package handlers
 import (
 	pb "api-getway/genproto/payment" // Update this path to match your actual protobuf path
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,7 +25,6 @@ func (h *HandlerStruct) CreatePaymentHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	fmt.Println(">>>>>>>", req)
 	resp, err := h.Payment.CreatePayment(context.Background(), &req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
